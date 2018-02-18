@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="cotInfrastructure" scheme="http://org.cot.infrastructure#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <import href="http://org.cot.graph.representation#/"/>
+  <kinds name="Sensor" scheme="http://org.cot.infrastructure#">
+    <attributes name="occi.sensor.featureOfInterest" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="occi.sensor.quatity" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="occi.sensor.quantityKind" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="occi.sensor.unit" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='resource']"/>
+  </kinds>
+  <kinds name="Actuator" scheme="http://org.cot.infrastructure#">
+    <attributes name="occi.actuator.featureOfInterest" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="occi.actuator.quantity" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="occi.actuator.quantityKind" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="occi.actuator.unit" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='resource']"/>
+  </kinds>
+  <mixins name="Location" scheme="http://org.cot.infrastructure#">
+    <attributes name="occi.location.lattitude" mutable="true" type="//@types.0"/>
+    <attributes name="occi.location.longitude" mutable="true" type="//@types.0"/>
+    <applies href="http://org.cot.graph.representation#//@kinds[term='node']"/>
+  </mixins>
+  <mixins name="SystemProperty" scheme="http://org.cot.infrastructure#" applies="//@kinds[term='sensor'] //@kinds[term='actuator']">
+    <attributes name="occi.property.accuracy" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://org.cot.graph.representation#//@types.0"/>
+    </attributes>
+    <attributes name="occi.property.resolution" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://org.cot.graph.representation#//@types.0"/>
+    </attributes>
+    <attributes name="occi.property.responseTime" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://org.cot.graph.representation#//@types.0"/>
+    </attributes>
+  </mixins>
+  <types xsi:type="occi:NumericType" name="Float" type="Float"/>
+</occi:Extension>

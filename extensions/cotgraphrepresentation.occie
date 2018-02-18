@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="cotGraphRepresentation" scheme="http://org.cot.graph.representation#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <kinds name="Node" scheme="http://org.cot.graph.representation#">
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='resource']"/>
+  </kinds>
+  <kinds name="NetworkLink" scheme="http://org.cot.graph.representation#" source="//@kinds[term='node']" target="//@kinds[term='node']">
+    <attributes name="occi.networklink.bandwidth" mutable="true" type="//@types.0"/>
+    <attributes name="occi.networklink.hops" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="occi.networklink.latency" mutable="true" type="//@types.0"/>
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='link']"/>
+  </kinds>
+  <kinds name="NodeLink" scheme="http://org.cot.graph.representation#" source="//@kinds[term='node']">
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='link']"/>
+  </kinds>
+  <types xsi:type="occi:NumericType" name="Double" type="Double"/>
+</occi:Extension>

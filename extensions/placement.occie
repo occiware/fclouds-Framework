@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="placement" scheme="http://schemas.modmacao.org/placement#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <import href="http://schemas.ogf.org/occi/infrastructure#/"/>
+  <import href="http://schemas.modmacao.org/occi/platform#/"/>
+  <kinds name="PlacementLink" scheme="http://schemas.modmacao.org/placement#">
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='link']"/>
+    <source href="http://schemas.modmacao.org/occi/platform#//@kinds[term='component']"/>
+    <target href="http://schemas.ogf.org/occi/infrastructure#//@kinds[term='compute']"/>
+  </kinds>
+</occi:Extension>

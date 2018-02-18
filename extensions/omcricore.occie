@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="omcricore" scheme="http://occiware.org/cloudrobotics/core#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <kinds name="RobotLink" scheme="http://occiware.org/cloudrobotics/core#" title="Generic robotlink to link resources with a robot" target="//@kinds[term='robot']">
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='link']"/>
+  </kinds>
+  <kinds name="Robot" scheme="http://occiware.org/cloudrobotics/core#" title="Generic robot">
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='resource']"/>
+  </kinds>
+  <mixins name="Connection" scheme="http://occiware.org/cloudrobotics/core#" title="Connect/disconnect to robot" applies="//@kinds[term='robot']">
+    <attributes name="timeOut" mutable="true" description="Timeout session in seconds if no connections">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <actions name="connect" scheme="http://occiware.org/cloudrobotics/core/connection/action#"/>
+    <actions name="disconnect" scheme="http://occiware.org/cloudrobotics/core/connection/action#"/>
+  </mixins>
+  <mixins name="Sensor" scheme="http://occiware.org/cloudrobotics/core#" title="Generic sensor" applies="//@kinds[term='robot']"/>
+  <mixins name="ColorSensor" scheme="http://occiware.org/cloudrobotics/core#" title="Sensor color detection" depends="//@mixins[term='sensor']">
+    <attributes name="color" mutable="true" type="//@types.0"/>
+    <attributes name="light" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="darkness" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="colorLamp" mutable="true" type="//@types.0"/>
+    <actions name="senseColor" scheme="http://occiware.org/cloudrobotics/core/colorsensor/action#"/>
+  </mixins>
+  <mixins name="FlightActuator" scheme="http://occiware.org/cloudrobotics/core#" depends="//@mixins[term='actuator']">
+    <attributes name="horizontalTilt" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="verticalTilt" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="horizontalSpeed" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="verticalSpeed" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <actions name="move" scheme="http://occiware.org/cloudrobotics/core/flightactuator/action#"/>
+    <actions name="land" scheme="http://occiware.org/cloudrobotics/core/flightactuator/action#"/>
+    <actions name="takeOff" scheme="http://occiware.org/cloudrobotics/core/flightactuator/action#"/>
+  </mixins>
+  <mixins name="TouchSensor" scheme="http://occiware.org/cloudrobotics/core#" title="Touch detection" depends="//@mixins[term='sensor']">
+    <attributes name="touch" mutable="true" type="//@types.0"/>
+    <actions name="senseTouch" scheme="http://occiware.org/cloudrobotics/core/touchsensor/action#" title=""/>
+  </mixins>
+  <mixins name="UltrasonicSensor" scheme="http://occiware.org/cloudrobotics/core#" title="Sensor distance detection" depends="//@mixins[term='sensor']">
+    <attributes name="distance" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <actions name="senseDistance" scheme="http://occiware.org/cloudrobotics/core/ultrasonicsensor/action#"/>
+  </mixins>
+  <mixins name="Actuator" scheme="http://occiware.org/cloudrobotics/core#" title="Generic actuator" applies="//@kinds[term='robot']"/>
+  <mixins name="MotionActuator" scheme="http://occiware.org/cloudrobotics/core#" depends="//@mixins[term='actuator']">
+    <attributes name="angle" mutable="true" default="45">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="speed" mutable="true" default="100">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="duration" mutable="true" default="1000">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <actions name="moveForward" scheme="http://occiware.org/cloudrobotics/core/motionactuator/action#"/>
+    <actions name="moveBackward" scheme="http://occiware.org/cloudrobotics/core/motionactuator/action#"/>
+    <actions name="turnRight" scheme="http://occiware.org/cloudrobotics/core/motionactuator/action#"/>
+    <actions name="turnLeft" scheme="http://occiware.org/cloudrobotics/core/motionactuator/action#"/>
+    <actions name="stop" scheme="http://occiware.org/cloudrobotics/core/motionactuator/action#"/>
+  </mixins>
+  <mixins name="MouthActuator" scheme="http://occiware.org/cloudrobotics/core#" depends="//@mixins[term='actuator']">
+    <actions name="openMouth" scheme="http://occiware.org/cloudrobotics/core/mouthactuator/action#"/>
+    <actions name="closeMouth" scheme="http://occiware.org/cloudrobotics/core/mouthactuator/action#"/>
+  </mixins>
+  <types xsi:type="occi:EnumerationType" name="Color">
+    <literals name="WHITE"/>
+    <literals name="BLACK"/>
+    <literals name="BLUE"/>
+    <literals name="YELLOW"/>
+    <literals name="RED"/>
+    <literals name="GREEN"/>
+  </types>
+  <types xsi:type="occi:EnumerationType" name="Touch">
+    <literals name="PRESSED"/>
+    <literals name="RELEASED"/>
+    <literals name="HIT"/>
+  </types>
+</occi:Extension>

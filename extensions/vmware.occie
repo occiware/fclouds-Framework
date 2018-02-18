@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="vmware" scheme="http://occiware.org/occi/infrastructure/vmware#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <import href="http://schemas.ogf.org/occi/infrastructure/compute/template/1.1#/"/>
+  <import href="http://schemas.ogf.org/occi/infrastructure#/"/>
+  <import href="http://occiware.org/occi/infrastructure/security#/"/>
+  <kinds name="InstanceVMware" scheme="http://occiware.org/occi/infrastructure/vmware#">
+    <attributes name="imagename" mutable="true" default="" description="Name of the template if this compute has a template or will be created with a template.">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="markedastemplate" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="gueststate" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="guestosid" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="vcpu" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="instanceId" mutable="true" description="Unique Instance provider Id given by provider after creation">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="guestIpv4Address" mutable="true" description="Ipv4 address from guest tools.">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="guestIpv6Address" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <parent href="http://schemas.ogf.org/occi/infrastructure#//@kinds[term='compute']"/>
+  </kinds>
+  <kinds name="StorageVMware" scheme="http://occiware.org/occi/infrastructure/vmware#">
+    <parent href="http://schemas.ogf.org/occi/infrastructure#//@kinds[term='storage']"/>
+  </kinds>
+  <kinds name="StorageLinkVMware" scheme="http://occiware.org/occi/infrastructure/vmware#" source="//@kinds[term='instancevmware']" target="//@kinds[term='storagevmware']">
+    <parent href="http://schemas.ogf.org/occi/infrastructure#//@kinds[term='storagelink']"/>
+  </kinds>
+  <kinds name="VSwitch" scheme="http://occiware.org/occi/infrastructure/vmware#">
+    <attributes name="nbport" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <parent href="http://schemas.ogf.org/occi/infrastructure#//@kinds[term='network']"/>
+  </kinds>
+  <kinds name="NetworkAdapter" scheme="http://occiware.org/occi/infrastructure/vmware#" title="Network adapter interface" source="//@kinds[term='instancevmware']" target="//@kinds[term='vswitch']">
+    <parent href="http://schemas.ogf.org/occi/infrastructure#//@kinds[term='networkinterface']"/>
+  </kinds>
+  <kinds name="VcenterAccount" scheme="http://occiware.org/occi/infrastructure/vmware#">
+    <parent href="http://occiware.org/occi/infrastructure/security#//@kinds[term='cloudaccount']"/>
+  </kinds>
+  <mixins name="windows" scheme="http://occiware.org/occi/infrastructure/vmware#" title="Mixin os_tpl for Windows system" depends="//@mixins[term='os_tpl_vmware']" applies="//@kinds[term='instancevmware']"/>
+  <mixins name="linux" scheme="http://occiware.org/occi/infrastructure/vmware#" title="Mixin os_tpl for linux systems" depends="//@mixins[term='os_tpl_vmware']" applies="//@kinds[term='instancevmware']"/>
+  <mixins name="macosx" scheme="http://occiware.org/occi/infrastructure/vmware#" title="Mixin os_tpl for mac os x systems" depends="//@mixins[term='os_tpl_vmware']" applies="//@kinds[term='instancevmware']"/>
+  <mixins name="vmwarefolders" scheme="http://occiware.org/occi/infrastructure/vmware#" title="This mixin add global attributes like datacentername, clustername, hostsystem name etc." applies="//@kinds[term='instancevmware'] //@kinds[term='networkadapter'] //@kinds[term='storagelinkvmware'] //@kinds[term='storagevmware'] //@kinds[term='vswitch']">
+    <attributes name="datacentername" mutable="true" description="Datacenter name identifier of the entity">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="datastorename" mutable="true" description="Datastore name">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="clustername" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="hostsystemname" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="inventorypath" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+  </mixins>
+  <mixins name="os_tpl_vmware" scheme="http://occiware.org/occi/infrastructure/vmware#" applies="//@kinds[term='instancevmware']">
+    <attributes name="datastoreisopath" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="guestid" mutable="true" required="true" type="//@types.0"/>
+    <depends href="http://schemas.ogf.org/occi/infrastructure#//@mixins[term='os_tpl']"/>
+  </mixins>
+  <mixins name="SSH_User_Data" scheme="http://occiware.org/occi/infrastructure/vmware#" applies="//@kinds[term='instancevmware']">
+    <attributes name="password" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="occi.compute.userdata.file" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <attributes name="user" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <depends href="http://schemas.ogf.org/occi/infrastructure#//@mixins[term='user_data']"/>
+  </mixins>
+  <mixins name="vCenterCredential" scheme="http://occiware.org/occi/infrastructure/vmware#" applies="//@kinds[term='vcenteraccount']">
+    <depends href="http://occiware.org/occi/infrastructure/security#//@mixins[term='basiccredential']"/>
+  </mixins>
+  <types xsi:type="occi:EnumerationType" name="GuestOsIdentifiers" documentation="Enumerate the guest os id used on vCenter VMware platform">
+    <literals name="dosGuest"/>
+    <literals name="win31Guest"/>
+    <literals name="win95Guest"/>
+    <literals name="win98Guest"/>
+    <literals name="winMeGuest"/>
+    <literals name="winNTGuest"/>
+    <literals name="win2000ProGuest"/>
+    <literals name="win2000ServGuest"/>
+    <literals name="win2000AdvServGuest"/>
+    <literals name="winXPHomeGuest"/>
+    <literals name="winXPProGuest"/>
+    <literals name="winXPPro64Guest"/>
+    <literals name="winNetWebGuest"/>
+    <literals name="winNetStandardGuest"/>
+    <literals name="winNetEnterpriseGuest"/>
+    <literals name="winNetDatacenterGuest"/>
+    <literals name="winNetBusinessGuest"/>
+    <literals name="winNetStandard64Guest"/>
+    <literals name="winNetEnterprise64Guest"/>
+    <literals name="winLonghornGuest"/>
+    <literals name="winLonghorn64Guest"/>
+    <literals name="winNetDatacenter64Guest"/>
+    <literals name="winVistaGuest"/>
+    <literals name="winVista64Guest"/>
+    <literals name="windows7Guest"/>
+    <literals name="windows7_64Guest"/>
+    <literals name="windows7Server64Guest"/>
+    <literals name="windows8Guest"/>
+    <literals name="windows8_64Guest"/>
+    <literals name="windows8Server64Guest"/>
+    <literals name="windows9Guest"/>
+    <literals name="windows9_64Guest"/>
+    <literals name="windows9Server64Guest"/>
+    <literals name="windowsHyperVGuest"/>
+    <literals name="freebsdGuest"/>
+    <literals name="freebsd64Guest"/>
+    <literals name="redhatGuest"/>
+    <literals name="rhel2Guest"/>
+    <literals name="rhel3Guest"/>
+    <literals name="rhel3_64Guest"/>
+    <literals name="rhel4Guest"/>
+    <literals name="rhel4_64Guest"/>
+    <literals name="rhel5Guest"/>
+    <literals name="rhel5_64Guest"/>
+    <literals name="rhel6Guest"/>
+    <literals name="rhel6_64Guest"/>
+    <literals name="rhel7Guest"/>
+    <literals name="rhel7_64Guest"/>
+    <literals name="centosGuest"/>
+    <literals name="centos64Guest"/>
+    <literals name="oracleLinuxGuest"/>
+    <literals name="oracleLinux64Guest"/>
+    <literals name="suseGuest"/>
+    <literals name="suse64Guest"/>
+    <literals name="slesGuest"/>
+    <literals name="sles64Guest"/>
+    <literals name="sles10Guest"/>
+    <literals name="sles10_64Guest"/>
+    <literals name="sles11Guest"/>
+    <literals name="sles11_64Guest"/>
+    <literals name="sles12Guest"/>
+    <literals name="sles12_64Guest"/>
+    <literals name="nld9Guest"/>
+    <literals name="oesGuest"/>
+    <literals name="sjdsGuest"/>
+    <literals name="mandrakeGuest"/>
+    <literals name="mandrivaGuest"/>
+    <literals name="mandriva64Guest"/>
+    <literals name="turboLinuxGuest"/>
+    <literals name="turboLinux64Guest"/>
+    <literals name="ubuntuGuest"/>
+    <literals name="ubuntu64Guest"/>
+    <literals name="debian4Guest"/>
+    <literals name="debian4_64Guest"/>
+    <literals name="debian5Guest"/>
+    <literals name="debian5_64Guest"/>
+    <literals name="debian6Guest"/>
+    <literals name="debian6_64Guest"/>
+    <literals name="debian7Guest"/>
+    <literals name="debian7_64Guest"/>
+    <literals name="debian8Guest"/>
+    <literals name="debian8_64Guest"/>
+    <literals name="asianux3Guest"/>
+    <literals name="asianux3_64Guest"/>
+    <literals name="asianux4Guest"/>
+    <literals name="asianux4_64Guest"/>
+    <literals name="asianux5_64Guest"/>
+    <literals name="opensuseGuest"/>
+    <literals name="opensuse64Guest"/>
+    <literals name="fedoraGuest"/>
+    <literals name="fedora64Guest"/>
+    <literals name="coreos64Guest"/>
+    <literals name="other24xLinuxGuest"/>
+    <literals name="other26xLinuxGuest"/>
+    <literals name="otherLinuxGuest"/>
+    <literals name="other3xLinuxGuest"/>
+    <literals name="genericLinuxGuest"/>
+    <literals name="other24xLinux64Guest"/>
+    <literals name="other26xLinux64Guest"/>
+    <literals name="other3xLinux64Guest"/>
+    <literals name="otherLinux64Guest"/>
+    <literals name="solaris6Guest"/>
+    <literals name="solaris7Guest"/>
+    <literals name="solaris8Guest"/>
+    <literals name="solaris9Guest"/>
+    <literals name="solaris10Guest"/>
+    <literals name="solaris10_64Guest"/>
+    <literals name="solaris11_64Guest"/>
+    <literals name="os2Guest"/>
+    <literals name="eComStationGuest"/>
+    <literals name="eComStation2Guest"/>
+    <literals name="netware4Guest"/>
+    <literals name="netware5Guest"/>
+    <literals name="netware6Guest"/>
+    <literals name="openServer5Guest"/>
+    <literals name="openServer6Guest"/>
+    <literals name="unixWare7Guest"/>
+    <literals name="darwinGuest"/>
+    <literals name="darwin64Guest"/>
+    <literals name="darwin10Guest"/>
+    <literals name="darwin10_64Guest"/>
+    <literals name="darwin11Guest"/>
+    <literals name="darwin11_64Guest"/>
+    <literals name="darwin12_64Guest"/>
+    <literals name="darwin13_64Guest"/>
+    <literals name="darwin14_64Guest"/>
+    <literals name="vmkernelGuest"/>
+    <literals name="vmkernel5Guest"/>
+    <literals name="vmkernel6Guest"/>
+    <literals name="otherGuest"/>
+    <literals name="otherGuest64"/>
+  </types>
+</occi:Extension>

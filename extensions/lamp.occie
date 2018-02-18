@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="lamp" scheme="http://schemas.modmacao.org/lamp#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <import href="http://schemas.modmacao.org/modmacao#/"/>
+  <mixins name="LAMP" scheme="http://schemas.modmacao.org/lamp#">
+    <constraints name="OnlyOneApacheServer" body="true"/>
+    <constraints name="OneOrMoreTomcats" body="true"/>
+    <constraints name="OnlyOneMySQL" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='application']"/>
+  </mixins>
+  <mixins name="ApacheServer" scheme="http://schemas.modmacao.org/lamp#">
+    <constraints name="OneOrMoreTomcatDependencies" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='component']"/>
+  </mixins>
+  <mixins name="Tomcat" scheme="http://schemas.modmacao.org/lamp#">
+    <constraints name="OnlyOneMySQLDependency" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='component']"/>
+  </mixins>
+  <mixins name="MySQL" scheme="http://schemas.modmacao.org/lamp#">
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='component']"/>
+  </mixins>
+  <mixins name="TomcatDependency" scheme="http://schemas.modmacao.org/lamp#">
+    <constraints name="TargetMustBeTomcat" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='executiondependency']"/>
+  </mixins>
+  <mixins name="MySQLDependency" scheme="http://schemas.modmacao.org/lamp#">
+    <constraints name="TargetMustBeMySQL" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='executiondependency']"/>
+  </mixins>
+</occi:Extension>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="apache_spark" scheme="http://schemas.modmacao.org/apache/spark#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <import href="http://schemas.ogf.org/occi/infrastructure#/"/>
+  <import href="http://schemas.modmacao.org/modmacao#/"/>
+  <mixins name="Master" scheme="http://schemas.modmacao.org/apache/spark#" depends="//@mixins[term='apachesparkcomponent']"/>
+  <mixins name="Worker" scheme="http://schemas.modmacao.org/apache/spark#" depends="//@mixins[term='apachesparkcomponent']">
+    <attributes name="apache.spark.worker.cores" mutable="false" description="Total CPU cores to allow Spark applications to use on the machine (default: all available)">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/infrastructure#//@types.13"/>
+    </attributes>
+    <attributes name="apache.spark.worker.memory" mutable="false" description="Total amount of memory to allow Spark applications to use on the machine, in a format like 1000M or 2G (default: your machine's total RAM minus 1 GB)">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/infrastructure#//@types.15"/>
+    </attributes>
+    <constraints name="OnlyOneMasterDependency" body="true"/>
+    <constraints name="WorkerCoresSmallerThanComputeCores" body="true"/>
+    <constraints name="WorkerMemorySmallerThanComputeMemory" body="true"/>
+  </mixins>
+  <mixins name="ApacheSparkComponent" scheme="http://schemas.modmacao.org/apache/spark#">
+    <attributes name="apache.spark.port" mutable="false" description="Port for service to listen on (default: 7077 for master, random for worker)">
+      <type xsi:type="occi:NumericType" href="http://schemas.modmacao.org/modmacao#//@types.1"/>
+    </attributes>
+    <attributes name="apache.spark.webui.port" mutable="false" description="Port for Web UI (default: 8080 for master, 8081 for worker)">
+      <type xsi:type="occi:NumericType" href="http://schemas.modmacao.org/modmacao#//@types.1"/>
+    </attributes>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='component']"/>
+  </mixins>
+  <mixins name="ApacheSparkCluster" scheme="http://schemas.modmacao.org/apache/spark#">
+    <constraints name="OnlyOneMaster" description="An Apache Spark Cluster contains only one Spark Standalone Master." body="true"/>
+    <constraints name="OneOrMoreWorkers" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='cluster']"/>
+  </mixins>
+  <mixins name="MasterDependency" scheme="http://schemas.modmacao.org/apache/spark#">
+    <constraints name="SourceMustBeWorker" body="true"/>
+    <constraints name="TargetMustBeMaster" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='executiondependency']"/>
+  </mixins>
+</occi:Extension>

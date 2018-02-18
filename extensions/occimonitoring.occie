@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="occimonitoring" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <kinds name="Zabbixinstance" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#">
+    <attributes name="zabbixinstance.port" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="zabbixinstance.identifier" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="zabbixinstance.ip" mutable="true">
+      <type xsi:type="occi:StringType" href="http://schemas.ogf.org/occi/core#//@types.0"/>
+    </attributes>
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='resource']"/>
+  </kinds>
+  <kinds name="Hostgroup" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#">
+    <attributes name="hostgroup.identifier" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='resource']"/>
+  </kinds>
+  <kinds name="Zabbixtemplate" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#">
+    <attributes name="zabbixtemplate.identifier" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="zabbixtemplate.hostgid" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <attributes name="zabbixtemplate.hostsids" mutable="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.ogf.org/occi/core#//@types.2"/>
+    </attributes>
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='resource']"/>
+  </kinds>
+  <kinds name="HostgrouLink" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#" source="//@kinds[term='zabbixinstance']" target="//@kinds[term='hostgroup']">
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='link']"/>
+  </kinds>
+  <kinds name="TemplateLink" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#" source="//@kinds[term='zabbixinstance']" target="//@kinds[term='zabbixtemplate']">
+    <parent href="http://schemas.ogf.org/occi/core#//@kinds[term='link']"/>
+  </kinds>
+  <mixins name="Metrics" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#" applies="//@kinds[term='zabbixinstance']"/>
+  <mixins name="CpuUsage" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#" title="" depends="//@mixins[term='metrics']" applies="//@kinds[term='zabbixinstance']">
+    <attributes name="cpuUsage.cpuUsage" mutable="true" default="" type="//@types.0"/>
+    <actions name="getmetric" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring/cpuusage/action#"/>
+  </mixins>
+  <mixins name="MemoryUsage" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring#" depends="//@mixins[term='metrics']" applies="//@kinds[term='zabbixinstance']">
+    <attributes name="memoryUsage.memUsage" mutable="true" default="" type="//@types.0"/>
+    <actions name="getmetric" scheme="http://org.eclipse.cmf.occi.multicloud.occimonitoring/memoryusage/action#"/>
+  </mixins>
+  <types xsi:type="occi:NumericType" name="Double" type="Double"/>
+</occi:Extension>

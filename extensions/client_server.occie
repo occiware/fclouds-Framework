@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="client_server" scheme="http://schemas.modmacao.org/client_server#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <import href="http://schemas.modmacao.org/modmacao#/"/>
+  <import href="http://schemas.modmacao.org/occi/platform#/"/>
+  <mixins name="ClientServer" scheme="http://schemas.modmacao.org/client_server#">
+    <constraints name="OneOrMoreClients" body="true"/>
+    <constraints name="OnlyOneServer" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='application']"/>
+  </mixins>
+  <mixins name="ServerDependency" scheme="http://schemas.modmacao.org/client_server#">
+    <constraints name="SourceMustBeClient" body="true"/>
+    <constraints name="TargetMustBeServer" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='executiondependency']"/>
+  </mixins>
+  <mixins name="Client" scheme="http://schemas.modmacao.org/client_server#">
+    <constraints name="OneServerDependency" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='component']"/>
+  </mixins>
+  <mixins name="Server" scheme="http://schemas.modmacao.org/client_server#">
+    <attributes name="server.port" mutable="false" required="true">
+      <type xsi:type="occi:NumericType" href="http://schemas.modmacao.org/modmacao#//@types.1"/>
+    </attributes>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='component']"/>
+  </mixins>
+</occi:Extension>

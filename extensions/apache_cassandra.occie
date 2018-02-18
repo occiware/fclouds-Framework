@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<occi:Extension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:occi="http://schemas.ogf.org/occi/core/ecore" name="apache_cassandra" scheme="http://schemas.modmacao.org/apache/cassandra#">
+  <import href="http://schemas.ogf.org/occi/core#/"/>
+  <import href="http://schemas.modmacao.org/modmacao#/"/>
+  <mixins name="Cluster" scheme="http://schemas.modmacao.org/apache/cassandra#">
+    <constraints name="OneOrMoreNodes" body="true"/>
+    <constraints name="OneOrMoreSeeds" body="true"/>
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='cluster']"/>
+  </mixins>
+  <mixins name="Node" scheme="http://schemas.modmacao.org/apache/cassandra#">
+    <depends href="http://schemas.modmacao.org/modmacao#//@mixins[term='component']"/>
+  </mixins>
+  <mixins name="Seed" scheme="http://schemas.modmacao.org/apache/cassandra#" depends="//@mixins[term='node']"/>
+</occi:Extension>
