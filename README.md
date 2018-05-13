@@ -18,7 +18,7 @@ You need Alloy analyzer. You may download it [here](http://alloy.csail.mit.edu/a
 git clone https://github.com/occiware/fclouds-Framework.git
 ```
 
-2. In Alloy analyzer, open a file with `.als` extension in the folder `fclouds-framework`. This file is the formal specification in Alloy of a certain cloud domain, _e.g._ `docker.als`, `infrastructure.als`, `vmware.als`, etc.
+2. In Alloy analyzer, open a file with `.als` extension from the folder `fclouds-framework`. This file is the formal specification in Alloy of a certain cloud domain, _e.g._ `docker.als`, `infrastructure.als`, `vmware.als`, etc.
 
 3. In the Execute sub-menu, you may find all the predefined `Run` and `Check` commands.
 
@@ -28,4 +28,20 @@ git clone https://github.com/occiware/fclouds-Framework.git
 * `Check` commands find a counterexample of a certain property.
     * If a counterexample is found, the property is false. Else, it is true in a given scope.
 
-## Examples
+## Example
+
+In this section, we present a full example of how to use **fclouds**.
+
+1. Open `platform.als` in Alloy analyzer.
+
+2. We want to verify that the specification is consistent, i.e., it does not contain contradictory constraints. For this, in the Execute sub-menu, we launch the `Run Consistency for 10` command by clicking on it.
+
+3. In the panel on the right, we obtain `Instance found. Predicate is consistent.` This means that there are instances that combine up to 10 objects of each type and that may satisfy the `platform` specification. The Alloy analyzer can display instances in graphical form, or in textual form, or as an expanding tree.
+
+4. Now, we want to verify that retrieving a component (using GET HTTP method) does not affect the configuration. This means we want to verify the safety property on the retrieval of a component. For this, in the Execute sub-menu, we launch the `Check RetrieveResourceIsSafe for 10` command by clicking on it.
+
+5. In the panel on the right, we obtain `No counterexample found. Assertion may be valid.` This means that within the scope 10, i.e., for 10 objects of each type, the safety of component retrieval holds.
+
+
+
+
